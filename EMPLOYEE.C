@@ -2,7 +2,6 @@
 #include<conio.h>
 #include<string.h>
 #include<process.h>
-#include<dos.h>
 
 struct emp{
 	char name[20],gender[10],id[5];
@@ -29,8 +28,8 @@ void main()
 	 printf("1->Add Employee\n");
 	 printf("2->Display all records\n");
 	 printf("3->Delete record\n");
-	 printf("4->Search\n");
-	 printf("5->Modify\n");
+	 printf("4->Search record\n");
+	 printf("5->Modify record\n");
 	 printf("6->Exit\n");
 	 scanf("%d",&ch);
 	 switch(ch){
@@ -157,25 +156,26 @@ void modify()
 	while(fread(&e,size,1,fp)==1){
 	 if(strcmp(id,e.id)==0){
 	  flag=1;
+	  fseek(fp,-size,1);
+	  printf("Enter New ID: \n");
+	  scanf("%s",e.id);
+	  printf("Enter New Name: \n");
+	  fflush(stdin);
+	  gets(e.name);
+	  printf("Enter New Age: \n");
+	  scanf("%d",&e.age);
+	  printf("Enter New Salary: \n");
+	  scanf("%f",&e.salary);
+	  printf("Enter New Gender: \n");
+	  scanf("%s",e.gender);
+	  fwrite(&e,size,1,fp);
+	  break;
 	 }
 	}
 	if(flag==0){
 	 printf("Record not found...\n");
 	}
 	else{
-	 fseek(fp,-size,1);
-	 printf("Enter New ID: \n");
-	 scanf("%s",e.id);
-	 printf("Enter New Name: \n");
-	 fflush(stdin);
-	 gets(e.name);
-	 printf("Enter New Age: \n");
-	 scanf("%d",&e.age);
-	 printf("Enter New Salary: \n");
-	 scanf("%f",&e.salary);
-	 printf("Enter New Gender: \n");
-	 scanf("%s",e.gender);
-	 fwrite(&e,size,1,fp);
 	 printf("Record modified successfully...\n");
 	}
 	fclose(fp);
